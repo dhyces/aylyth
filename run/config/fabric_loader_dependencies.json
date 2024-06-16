@@ -5,6 +5,11 @@
       "-depends": {
         "fabric-rendering-v1": ""
       }
+    },
+    "indium": {
+      "-depends": {
+        "fabric-renderer-api-v1": ""
+      }
     }
   }
 }
