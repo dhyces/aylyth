@@ -22,7 +22,6 @@ import moriyashiine.aylyth.client.particle.PilotLightParticle;
 import moriyashiine.aylyth.client.render.AylythDimensionRenderer;
 import moriyashiine.aylyth.client.render.AylythRenderLayers;
 import moriyashiine.aylyth.client.render.block.entity.SeepBlockEntityRenderer;
-import moriyashiine.aylyth.client.render.block.entity.SoulHearthBlockEntityRenderer;
 import moriyashiine.aylyth.client.render.block.entity.VitalThuribleBlockEntityRenderer;
 import moriyashiine.aylyth.client.render.block.entity.WoodyGrowthBlockEntityRenderer;
 import moriyashiine.aylyth.client.render.entity.RootPropEntityRenderer;
@@ -135,7 +134,6 @@ public class AylythClient implements ClientModInitializer {
 
 		BlockEntityRendererFactories.register(ModBlockEntityTypes.SEEP_BLOCK_ENTITY_TYPE, SeepBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(ModBlockEntityTypes.VITAL_THURIBLE_BLOCK_ENTITY, VitalThuribleBlockEntityRenderer::new);
-		BlockEntityRendererFactories.register(ModBlockEntityTypes.SOUL_HEARTH_BLOCK_ENTITY, SoulHearthBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(ModBlockEntityTypes.WOODY_GROWTH_CACHE_BLOCK_ENTITY, WoodyGrowthBlockEntityRenderer::new);
 
 		EntityModelLayerRegistry.registerModelLayer(YMPE_INFESTATION_STAGE_1_MODEL_LAYER, YmpeInfestationModel::getTexturedModelData1);
@@ -222,6 +220,15 @@ public class AylythClient implements ClientModInitializer {
 						);
 						jsonModel.getOverrides().add(new ModelOverride(AylythUtil.id("item/coker_cola_lingering"), conditions));
 					}
+				}
+				return model;
+			});
+		});
+
+		ModelLoadingPlugin.register(pluginContext -> {
+			pluginContext.modifyModelAfterBake().register((model, context) -> {
+				if (context.id().getPath().contains("soul_hearth_charged")) {
+					return new SoulHearthBlockModel(model);
 				}
 				return model;
 			});

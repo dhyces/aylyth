@@ -39,7 +39,6 @@ public class SoulHearthBlockModel extends ForwardingBakedModel {
         if (state.isOf(ModBlocks.SOUL_HEARTH) && state.get(SoulHearthBlock.HALF) == DoubleBlockHalf.LOWER) {
             BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(new ModelIdentifier(AylythUtil.id("pomegranate"), "inventory"));
             MatrixStack stack = new MatrixStack();
-            stack.push();
             float scale = 0.4f;
             stack.scale(scale, scale, scale);
             stack.translate(0.3/scale, 0.75/scale, 0.3/scale);
@@ -61,7 +60,6 @@ public class SoulHearthBlockModel extends ForwardingBakedModel {
                 context.popTransform();
                 stack.pop();
             }
-            stack.pop();
         }
     }
 }
