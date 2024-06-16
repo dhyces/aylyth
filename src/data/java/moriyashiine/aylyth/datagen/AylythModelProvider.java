@@ -10,6 +10,8 @@ import moriyashiine.aylyth.common.block.StrewnLeavesBlock;
 import moriyashiine.aylyth.common.registry.ModBlocks;
 import moriyashiine.aylyth.common.registry.ModItems;
 import moriyashiine.aylyth.common.util.AylythUtil;
+import moriyashiine.aylyth.datagen.model.ModelKeys;
+import moriyashiine.aylyth.datagen.model.PerspectiveModels;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
@@ -145,8 +147,6 @@ public class AylythModelProvider extends FabricModelProvider {
 //        Models.GENERATED.upload(AylythUtil.id("item/" + Registries.ITEM.getId(ModItems.MYSTERIOUS_SKETCH).getPath() + "_generated"), TextureMap.layer0(AylythUtil.id("item/" + Registries.ITEM.getId(ModItems.MYSTERIOUS_SKETCH).getPath())), itemModelGenerator.writer);
         itemModelGenerator.register(ModItems.POMEGRANATE_CASSETTE, Models.GENERATED);
         itemModelGenerator.register(ModItems.BLIGHTED_THORNS, Models.GENERATED);
-        itemModelGenerator.register(ModItems.YMPE_FLAMBERGE, BUILTIN);
-        itemModelGenerator.register(ModItems.YMPE_SCYTHE, BUILTIN);
         itemModelGenerator.register(ModItems.THORN_FLECHETTE, Models.GENERATED);
         itemModelGenerator.register(ModItems.BLIGHTED_THORN_FLECHETTE, Models.GENERATED);
         itemModelGenerator.register(ModItems.LANCEOLATE_DAGGER, Models.HANDHELD);
@@ -161,11 +161,23 @@ public class AylythModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.BLIGHTED_AXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.BLIGHTED_HOE, Models.HANDHELD);
 
+        registerBig(itemModelGenerator, ModItems.YMPE_GLAIVE);
+        registerBig(itemModelGenerator, ModItems.YMPE_LANCE);
+        registerBig(itemModelGenerator, ModItems.YMPE_FLAMBERGE);
+        registerBig(itemModelGenerator, ModItems.YMPE_SCYTHE);
+
         registerFlask(itemModelGenerator, ModItems.NEPHRITE_FLASK);
         registerFlask(itemModelGenerator, ModItems.DARK_NEPHRITE_FLASK);
         Models.GENERATED_TWO_LAYERS.upload(AylythUtil.id("item/coker_cola"), TextureMap.layered(AylythUtil.id("item/blight_potion"), AylythUtil.id("item/blight_potion")), itemModelGenerator.writer);
         Models.GENERATED_TWO_LAYERS.upload(AylythUtil.id("item/coker_cola_splash"), TextureMap.layered(AylythUtil.id("item/blight_potion_splash"), AylythUtil.id("item/blight_potion_splash")), itemModelGenerator.writer);
         Models.GENERATED_TWO_LAYERS.upload(AylythUtil.id("item/coker_cola_lingering"), TextureMap.layered(AylythUtil.id("item/blight_potion_lingering"), AylythUtil.id("item/blight_potion_lingering")), itemModelGenerator.writer);
+    }
+
+    private void registerBig(ItemModelGenerator generator, Item item) {
+        PerspectiveModels.BIG_HANDHELD.resolver()
+                .with(ModelKeys.GUI, ModelIds.getItemModelId(item).withSuffixedPath("_gui"))
+                .with(ModelKeys.HANDHELD, ModelIds.getItemModelId(item).withSuffixedPath("_handheld"))
+                .upload(ModelIds.getItemModelId(item), generator.writer);
     }
 
     private void registerFlask(ItemModelGenerator generator, ItemConvertible flask) {
